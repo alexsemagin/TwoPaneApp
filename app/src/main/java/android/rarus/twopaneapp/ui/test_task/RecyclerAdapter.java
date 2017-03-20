@@ -14,23 +14,24 @@ public  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewH
     private DataList mStringList;
     private ViewHolder mViewHolder;
     private Context mContext;
-    private ListFragment mFragment;
+    private OnItemSelected itemSelected;
+
+    public interface OnItemSelected {
+        void onItemSelected(String title, String info);
+    }
 
 
 
-    public  RecyclerAdapter(Context context, DataList strings, ListFragment fragment) {
+    public  RecyclerAdapter(Context context, DataList strings, OnItemSelected onItemSelected) {
         mContext = context;
         mStringList = strings;
-        mFragment = fragment;
+        itemSelected = onItemSelected;
     }
 
     //Связывает представление view c объектом модели
     //При вызове получает ViewHolder и позицию в наборе данных
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        /*TextView textViewTitle= holder.mTextViewTitle;
-        TextView textViewInfo= holder.mTextViewInfo;*/
-
         holder.mTextViewTitle.setText(mStringList.getTitle(position));
         holder.mTextViewInfo.setText(mStringList.getInfo(position));
     }
@@ -42,7 +43,7 @@ public  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewH
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(mContext);
         View view = layoutInflater.inflate(R.layout.list_item, parent, false);
-        mViewHolder = new ViewHolder(view, mContext);
+        mViewHolder = new ViewHolder(view);
         return mViewHolder;
     }
 
@@ -57,19 +58,17 @@ public  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewH
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mTextViewTitle;
         public TextView mTextViewInfo;
-        //private CallbacksClick mCallbacksClick;
 
 
-        public ViewHolder(View itemView, Context context) {
+
+
+        public ViewHolder(View itemView) {
             super(itemView);
             mTextViewTitle = (TextView) itemView.findViewById(R.id.title_text);
             mTextViewInfo = (TextView) itemView.findViewById(R.id.info_text);
 
-            /*if(context instanceof CallbacksClick)
-                mCallbacksClick = (CallbacksClick) context;*/
             itemView.setOnClickListener(this);
         }
-
 
         @Override
         public void onClick(View v) {
@@ -77,8 +76,10 @@ public  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewH
             TextView textViewInfo = (TextView) v.findViewById(R.id.info_text);
             String title = textViewTitle.getText().toString();
             String info = textViewInfo.getText().toString();
-            mFragment.onItemSelected(title, info);
+            itemSelected.onItemSelected(title, info);
         }
+
+
     }
 
 }

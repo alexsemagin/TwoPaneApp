@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TwoPaneApp</string>
+    <string name="button_back_title">Back</string>
 </resources>

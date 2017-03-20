@@ -1,17 +1,13 @@
 package android.rarus.twopaneapp.ui;
 
 import android.content.res.Configuration;
-import android.rarus.twopaneapp.ui.test_task.CallbacksClick;
 import android.rarus.twopaneapp.ui.test_task.DetailFragment;
 import android.rarus.twopaneapp.ui.test_task.ListFragment;
-import android.rarus.twopaneapp.OnBackPressedListener;
 import android.rarus.twopaneapp.R;
-import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 public class AppActivity extends AppCompatActivity  {
 
@@ -29,7 +25,7 @@ public class AppActivity extends AppCompatActivity  {
         if(fragment == null) {
             fragment = new ListFragment();
             //Создать новую транзакцию фрагмента, включить в нее операцию add, а затем закрепить
-            fragmentManager.beginTransaction().add(R.id.fragment_list_container, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.fragment_list_container, fragment).commit();
        }
     }
 
@@ -38,7 +34,7 @@ public class AppActivity extends AppCompatActivity  {
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            Fragment detail = fragmentManager.findFragmentByTag("tag_detail_fragment");
+            Fragment detail = fragmentManager.findFragmentByTag(DetailFragment.class.getName());
             fragmentManager.beginTransaction().remove(detail).commit();
         } else {
             super.onBackPressed();
