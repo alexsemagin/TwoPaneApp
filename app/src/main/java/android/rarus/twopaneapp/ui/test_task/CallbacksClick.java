@@ -1,4 +1,4 @@
-package android.rarus.twopaneapp;
+package android.rarus.twopaneapp.ui.test_task;
 
 /**
  * Created by antonc on 16.03.2017.

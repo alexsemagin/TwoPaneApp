@@ -1,6 +1,4 @@
-package android.rarus.twopaneapp;
-
-import android.content.Context;
+package android.rarus.twopaneapp.model.entity;
 
 import java.util.ArrayList;
 
@@ -15,7 +13,7 @@ public class DataList {
     private DataList() {
         mDataItems = new ArrayList<>();
         for(int i = 0; i<100; i++) {
-            mDataItems.add(new DataItem("Text " + i));
+            mDataItems.add(new DataItem("Title " + i, "This is test message "+i));
         }
     }
 
@@ -26,12 +24,28 @@ public class DataList {
     }
 
     public String getTitle(int position) {
-        return mDataItems.get(position).getTitle();
+        return mDataItems.get(position).mTitle;
+    }
+
+    public String getInfo(int position) {
+        return mDataItems.get(position).mInfo;
     }
 
     public int size() {
         return mDataItems.size();
     }
+
+
+    private class DataItem {
+        private String mTitle;
+        private String mInfo;
+
+        public DataItem(String title, String info) {
+            mTitle = title;
+            mInfo = info;
+        }
+    }
+
 
 
 
