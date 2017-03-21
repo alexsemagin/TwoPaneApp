@@ -32,7 +32,7 @@ public class ListFragment extends Fragment implements RecyclerAdapter.OnItemSele
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        mAdapter = new RecyclerAdapter(getContext(), DataList.get(), this);
+        mAdapter = new RecyclerAdapter(getContext(), this);
     }
 
 
@@ -51,6 +51,7 @@ public class ListFragment extends Fragment implements RecyclerAdapter.OnItemSele
         ButterKnife.bind(this, view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setList(DataList.get());
     }
 
 

@@ -27,10 +27,13 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
 
 
-    public  RecyclerAdapter(Context context, DataList strings, OnItemSelected onItemSelected) {
+    public  RecyclerAdapter(Context context, OnItemSelected onItemSelected) {
         mContext = context;
-        mStringList = strings;
         itemSelected = onItemSelected;
+    }
+
+    public void setList(DataList strings ) {
+        mStringList = strings;
     }
 
     //Связывает представление view c объектом модели

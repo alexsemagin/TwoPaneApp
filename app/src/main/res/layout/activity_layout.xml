@@ -12,6 +12,7 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        app:elevation="0sp"
         android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
@@ -36,8 +37,7 @@
     <FrameLayout
         android:id="@+id/fragment_detail_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent">
     </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>
