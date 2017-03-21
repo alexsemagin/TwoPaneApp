@@ -60,7 +60,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder  {
         @BindView(R.id.title_text) TextView mTextViewTitle;
         @BindView(R.id.info_text) TextView mTextViewInfo;
 

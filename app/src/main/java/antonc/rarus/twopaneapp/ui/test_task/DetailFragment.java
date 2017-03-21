@@ -13,6 +13,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DetailFragment extends Fragment {
+    private static final String ARG_TITLE = "title_text";
+    private static final String ARG_INFO = "info_text";
 
     @BindView(R.id.text_detail)
     TextView mTextDetail;
@@ -34,19 +36,10 @@ public class DetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        String mTitle = getArguments().getString("title_text");
-        String mInfo = getArguments().getString("info_text");
-
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar_detail);
         toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentManager().beginTransaction().remove(DetailFragment.this).commit();
-            }
-        });
-        toolbar.setTitle(mTitle);
-
-        mTextDetail.setText(mInfo);
+        toolbar.setNavigationOnClickListener( v -> getFragmentManager().beginTransaction().remove(DetailFragment.this).commit());
+        toolbar.setTitle(getArguments() == null? ARG_TITLE :getArguments().getString(ARG_TITLE));
+        mTextDetail.setText(getArguments() == null? ARG_INFO :getArguments().getString(ARG_INFO));
     }
 }

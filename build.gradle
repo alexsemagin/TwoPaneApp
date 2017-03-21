@@ -18,6 +18,7 @@ buildscript {
     }
 
     dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.6.0'
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.5.1'
     }
 
