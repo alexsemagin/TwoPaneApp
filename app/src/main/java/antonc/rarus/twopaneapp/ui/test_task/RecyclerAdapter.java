@@ -1,8 +1,13 @@
-package android.rarus.twopaneapp.ui.test_task;
+package antonc.rarus.twopaneapp.ui.test_task;
 
 import android.content.Context;
-import android.rarus.twopaneapp.model.entity.DataList;
-import android.rarus.twopaneapp.R;
+
+import antonc.rarus.twopaneapp.R;
+import antonc.rarus.twopaneapp.model.entity.DataList;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-public  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private DataList mStringList;
     private ViewHolder mViewHolder;
     private Context mContext;
@@ -42,7 +47,7 @@ public  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewH
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-        View view = layoutInflater.inflate(R.layout.list_item, parent, false);
+        View view = layoutInflater.inflate(antonc.rarus.twopaneapp.R.layout.list_item, parent, false);
         mViewHolder = new ViewHolder(view);
         return mViewHolder;
     }
@@ -56,30 +61,24 @@ public  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewH
 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView mTextViewTitle;
-        public TextView mTextViewInfo;
-
-
+        @BindView(R.id.title_text) TextView mTextViewTitle;
+        @BindView(R.id.info_text) TextView mTextViewInfo;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mTextViewTitle = (TextView) itemView.findViewById(R.id.title_text);
-            mTextViewInfo = (TextView) itemView.findViewById(R.id.info_text);
-
-            itemView.setOnClickListener(this);
+            ButterKnife.bind(this, itemView);
         }
 
-        @Override
-        public void onClick(View v) {
-            TextView textViewTitle = (TextView) v.findViewById(R.id.title_text);
-            TextView textViewInfo = (TextView) v.findViewById(R.id.info_text);
+        @OnClick (R.id.card_view)
+        public void onClick(View view) {
+            TextView textViewTitle = ButterKnife.findById(view, R.id.title_text);
+            TextView textViewInfo = ButterKnife.findById(view, R.id.info_text);
             String title = textViewTitle.getText().toString();
             String info = textViewInfo.getText().toString();
             itemSelected.onItemSelected(title, info);
+
         }
-
-
     }
 
 }

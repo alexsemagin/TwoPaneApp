@@ -1,19 +1,21 @@
-package android.rarus.twopaneapp.ui.test_task;
+package antonc.rarus.twopaneapp.ui.test_task;
 
 import android.os.Bundle;
-import android.rarus.twopaneapp.R;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class DetailFragment extends Fragment   {
+import antonc.rarus.twopaneapp.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class DetailFragment extends Fragment {
+
+    @BindView(R.id.text_detail)
+    TextView mTextDetail;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class DetailFragment extends Fragment   {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
 
         String mTitle = getArguments().getString("title_text");
         String mInfo = getArguments().getString("info_text");
@@ -44,8 +47,6 @@ public class DetailFragment extends Fragment   {
         });
         toolbar.setTitle(mTitle);
 
-
-        TextView textViewDetail = (TextView) view.findViewById(R.id.text_detail);
-        textViewDetail.setText(mInfo);
+        mTextDetail.setText(mInfo);
     }
 }

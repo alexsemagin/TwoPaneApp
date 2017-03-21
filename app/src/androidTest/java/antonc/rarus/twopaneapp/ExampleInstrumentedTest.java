@@ -1,4 +1,4 @@
-package android.rarus.twopaneapp;
+package antonc.rarus.twopaneapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

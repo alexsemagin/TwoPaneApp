@@ -1,8 +1,12 @@
-package android.rarus.twopaneapp.ui.test_task;
+package antonc.rarus.twopaneapp.ui.test_task;
 
 import android.os.Bundle;
-import android.rarus.twopaneapp.model.entity.DataList;
-import android.rarus.twopaneapp.R;
+
+import antonc.rarus.twopaneapp.R;
+import antonc.rarus.twopaneapp.model.entity.DataList;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +21,9 @@ public class ListFragment extends Fragment implements RecyclerAdapter.OnItemSele
     private static final String ARG_TITLE = "title_text";
     private static final String ARG_INFO = "info_text";
 
-    private RecyclerView mRecyclerView;
+    @BindView(R.id.recycler_view)
+    RecyclerView mRecyclerView;
+
     private RecyclerAdapter mAdapter;
 
 
@@ -30,6 +36,7 @@ public class ListFragment extends Fragment implements RecyclerAdapter.OnItemSele
     }
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_list, container, false);
@@ -40,9 +47,8 @@ public class ListFragment extends Fragment implements RecyclerAdapter.OnItemSele
         super.onViewCreated(view, savedInstanceState);
 
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.app_name);
-
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        toolbar.setTitle(antonc.rarus.twopaneapp.R.string.app_name);
+        ButterKnife.bind(this, view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -58,6 +64,6 @@ public class ListFragment extends Fragment implements RecyclerAdapter.OnItemSele
         detailFragment.setArguments(args);
 
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_detail_container, detailFragment, DetailFragment.class.getName()).commit();
+        fragmentManager.beginTransaction().replace(antonc.rarus.twopaneapp.R.id.fragment_detail_container, detailFragment, DetailFragment.class.getName()).commit();
     }
 }

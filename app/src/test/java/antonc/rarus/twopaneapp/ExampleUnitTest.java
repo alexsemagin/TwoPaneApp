@@ -1,4 +1,4 @@
-package android.rarus.twopaneapp;
+package antonc.rarus.twopaneapp;
 
 import org.junit.Test;
 

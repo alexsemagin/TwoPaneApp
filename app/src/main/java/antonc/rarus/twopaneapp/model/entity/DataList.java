@@ -1,4 +1,4 @@
-package android.rarus.twopaneapp.model.entity;
+package antonc.rarus.twopaneapp.model.entity;
 
 import java.util.ArrayList;
 
