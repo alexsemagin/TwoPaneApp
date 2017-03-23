@@ -1,31 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/tools"
-    android:id="@+id/card_view"
+    android:id="@+id/list_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="2dp"
-    card_view:cardCornerRadius="2dp">
+    android:orientation="vertical"
+    android:minHeight="72dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
 
-
-    <LinearLayout
-        android:id="@+id/card_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_margin="8dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
 
-        <TextView
-            android:id="@+id/title_text"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/image_face"
             android:layout_width="wrap_content"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/info_text"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
-    </LinearLayout>
+            android:minHeight="48dp"
+            android:minWidth="48dp"/>
 
-</android.support.v7.widget.CardView>
+        <LinearLayout
+            android:id="@+id/list_item_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:layout_toRightOf="@id/image_face"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="8dp"
+            android:paddingTop="4dp">
+
+            <TextView
+                android:id="@+id/title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/info_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorLightGray"/>
+
+
+
+</LinearLayout>
+
+

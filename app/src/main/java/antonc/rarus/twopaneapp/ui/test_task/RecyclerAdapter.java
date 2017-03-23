@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -26,13 +27,12 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     }
 
 
-
-    public  RecyclerAdapter(Context context, OnItemSelected onItemSelected) {
+    public RecyclerAdapter(Context context, OnItemSelected onItemSelected) {
         mContext = context;
         itemSelected = onItemSelected;
     }
 
-    public void setList(DataList strings ) {
+    public void setList(DataList strings) {
         mStringList = strings;
     }
 
@@ -40,8 +40,12 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     //При вызове получает ViewHolder и позицию в наборе данных
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mTextViewTitle.setText(mStringList.getTitle(position));
-        holder.mTextViewInfo.setText(mStringList.getInfo(position));
+        holder.textViewTitle.setText(mStringList.getTitle(position));
+
+        String info = mStringList.getInfo(position);
+        if (info.equals("")) holder.textViewInfo.setVisibility(View.GONE);
+        holder.textViewInfo.setText(mStringList.getInfo(position));
+        holder.imageView.setImageResource(R.mipmap.ic_face);
     }
 
 
@@ -50,7 +54,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-        View view = layoutInflater.inflate(antonc.rarus.twopaneapp.R.layout.list_item, parent, false);
+        View view = layoutInflater.inflate(R.layout.list_item, parent, false);
         mViewHolder = new ViewHolder(view);
         return mViewHolder;
     }
@@ -63,9 +67,13 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder  {
-        @BindView(R.id.title_text) TextView mTextViewTitle;
-        @BindView(R.id.info_text) TextView mTextViewInfo;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.image_face)
+        ImageView imageView;
+        @BindView(R.id.title_text)
+        TextView textViewTitle;
+        @BindView(R.id.info_text)
+        TextView textViewInfo;
 
 
         public ViewHolder(View itemView) {
@@ -73,7 +81,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
             ButterKnife.bind(this, itemView);
         }
 
-        @OnClick (R.id.card_view)
+        @OnClick(R.id.list_item)
         public void onClick(View view) {
             TextView textViewTitle = ButterKnife.findById(view, R.id.title_text);
             TextView textViewInfo = ButterKnife.findById(view, R.id.info_text);

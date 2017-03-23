@@ -12,13 +12,15 @@ public class DataList {
 
     private DataList() {
         mDataItems = new ArrayList<>();
-        for(int i = 0; i<100; i++) {
-            mDataItems.add(new DataItem("Title " + i, "This is test message "+i));
+        for (int i = 0; i < 100; i++) {
+            if (i % 2 == 0)
+                mDataItems.add(new DataItem("Title " + i, "This is test message " + i));
+            else mDataItems.add(new DataItem("Title " + i, ""));
         }
     }
 
     public static DataList get() {
-        if(sDataList == null)
+        if (sDataList == null)
             sDataList = new DataList();
         return sDataList;
     }
@@ -45,10 +47,6 @@ public class DataList {
             mInfo = info;
         }
     }
-
-
-
-
 
 
 }

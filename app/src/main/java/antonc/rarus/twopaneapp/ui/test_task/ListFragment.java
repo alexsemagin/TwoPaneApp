@@ -2,6 +2,7 @@ package antonc.rarus.twopaneapp.ui.test_task;
 
 import android.os.Bundle;
 
+
 import antonc.rarus.twopaneapp.R;
 import antonc.rarus.twopaneapp.model.entity.DataList;
 import butterknife.BindView;
