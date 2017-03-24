@@ -74,6 +74,8 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         TextView textViewTitle;
         @BindView(R.id.info_text)
         TextView textViewInfo;
+       /* @BindView(R.id.time)
+        TextView textClock;*/
 
 
         public ViewHolder(View itemView) {

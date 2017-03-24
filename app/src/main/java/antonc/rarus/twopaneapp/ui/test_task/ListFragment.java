@@ -52,7 +52,7 @@ public class ListFragment extends Fragment implements RecyclerAdapter.OnItemSele
         ButterKnife.bind(this, view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setList(DataList.get());
+        mAdapter.setList(DataList.get(getActivity()));
     }
 
 

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">TwoPaneApp</string>
     <string name="button_back_title">Back</string>
+    <string name="title">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis leo libero, mollis eu mollis in, ultricies sed nisl.</string>
+    <string name="info">In hac habitasse platea dictumst. Suspendisse eleifend erat eu malesuada accumsan. Proin ut cursus tellus, elementum consectetur risus. Suspendisse ullamcorper mattis fermentum. Cras fermentum commodo volutpat. Praesent non maximus odio. Aliquam sed tellus efficitur, consectetur elit eget, consectetur elit. Donec ac mauris eros. Integer non commodo orci. Nulla ut finibus nunc. </string>
+    <string name="time">12:48</string>
 </resources>

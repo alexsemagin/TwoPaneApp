@@ -44,5 +44,4 @@ public class AppActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
 }
