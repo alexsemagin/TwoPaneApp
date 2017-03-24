@@ -49,6 +49,8 @@ public class ListFragment extends Fragment implements RecyclerAdapter.OnItemSele
 
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(antonc.rarus.twopaneapp.R.string.app_name);
+        toolbar.setNavigationIcon(R.drawable.ic_back);
+        toolbar.setNavigationOnClickListener( v -> getActivity().finish());
         ButterKnife.bind(this, view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);

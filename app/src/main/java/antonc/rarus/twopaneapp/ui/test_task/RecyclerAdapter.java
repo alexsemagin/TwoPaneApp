@@ -41,9 +41,8 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.textViewTitle.setText(mStringList.getTitle(position));
-
         String info = mStringList.getInfo(position);
-        if (info.equals("")) holder.textViewInfo.setVisibility(View.GONE);
+        holder.textViewInfo.setVisibility(info.equals("") ? View.GONE : View.VISIBLE);
         holder.textViewInfo.setText(mStringList.getInfo(position));
         holder.imageView.setImageResource(R.mipmap.ic_face);
     }

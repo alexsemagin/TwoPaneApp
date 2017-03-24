@@ -40,6 +40,7 @@ public class DetailFragment extends Fragment {
         toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener( v -> getFragmentManager().beginTransaction().remove(DetailFragment.this).commit());
         toolbar.setTitle(getArguments() == null? ARG_TITLE :getArguments().getString(ARG_TITLE));
+        toolbar.setContentInsetStartWithNavigation(72);
         mTextDetail.setText(getArguments() == null? ARG_INFO :getArguments().getString(ARG_INFO));
     }
 }
