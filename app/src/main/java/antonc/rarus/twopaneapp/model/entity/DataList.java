@@ -1,13 +1,6 @@
 package antonc.rarus.twopaneapp.model.entity;
 
-import android.app.Activity;
-import android.content.Context;
-
 import java.util.ArrayList;
-
-import antonc.rarus.twopaneapp.R;
-import butterknife.BindString;
-import butterknife.ButterKnife;
 
 /**
  * Created by antonc on 17.03.2017.
@@ -16,24 +9,21 @@ import butterknife.ButterKnife;
 public class DataList {
     private static DataList sDataList;
     private ArrayList<DataItem> mDataItems;
-    private static Activity mContext;
 
-    @BindString(R.string.title) String title;
-    @BindString(R.string.info) String info;
+    private static String title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis leo libero, mollis eu mollis in, ultricies sed nisl.";
+    private static String info = "In hac habitasse platea dictumst. Suspendisse eleifend erat eu malesuada accumsan. Proin ut cursus tellus, elementum consectetur risus. Suspendisse ullamcorper mattis fermentum. Cras fermentum commodo volutpat. Praesent non maximus odio. Aliquam sed tellus efficitur, consectetur elit eget, consectetur elit. Donec ac mauris eros. Integer non commodo orci. Nulla ut finibus nunc.";
 
     private DataList() {
-        ButterKnife.bind(this, mContext);
         mDataItems = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             if (i % 2 == 0)
-                mDataItems.add(new DataItem(title+i,info + i));
+                mDataItems.add(new DataItem(title + i, info + i));
             else mDataItems.add(new DataItem(title + i, ""));
         }
     }
 
-    public static DataList get(Activity context) {
+    public static DataList get() {
         if (sDataList == null) {
-            mContext = context;
             sDataList = new DataList();
         }
         return sDataList;
@@ -47,9 +37,6 @@ public class DataList {
         return mDataItems.get(position).mInfo;
     }
 
-    /*public String getTime(int position) {
-        return mDataItems.get(position).mTime;
-    }*/
 
     public int size() {
         return mDataItems.size();
@@ -59,12 +46,10 @@ public class DataList {
     private class DataItem {
         private String mTitle;
         private String mInfo;
-       // private String mTime;
 
         public DataItem(String title, String info) {
             mTitle = title;
             mInfo = info;
-           // mTime = time;
         }
     }
 }
