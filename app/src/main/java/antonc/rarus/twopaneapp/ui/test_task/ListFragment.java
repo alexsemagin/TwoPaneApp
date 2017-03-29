@@ -3,18 +3,16 @@ package antonc.rarus.twopaneapp.ui.test_task;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import antonc.rarus.twopaneapp.R;
 import antonc.rarus.twopaneapp.model.entity.DataList;
@@ -76,6 +74,9 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
         MenuItem searchMenuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchMenuItem.getActionView();
         searchView.setOnQueryTextListener(this);
+
+        ImageView searchCloseIcon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        searchCloseIcon.setImageResource(R.drawable.ic_close);
     }
 
 
@@ -108,15 +109,17 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
     }
 
 
+
+
     @Override
     public boolean onQueryTextSubmit(String query) {
-        mAdapter.getFilter().filter(query);
+        mPresenter.search(query);
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        mAdapter.getFilter().filter(newText);
+        mPresenter.search(newText);
         return false;
     }
 }

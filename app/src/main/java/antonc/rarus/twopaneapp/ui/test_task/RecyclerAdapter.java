@@ -17,20 +17,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements Filterable {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>  {
     private DataList mStringList;
     private ViewHolder mViewHolder;
     private Context mContext;
     private OnItemSelected itemSelected;
-    private MyFilter filter;
 
-    @Override
-    public Filter getFilter() {
-        if (filter == null) {
-            filter = new MyFilter(this);
-        }
-        return filter;
-    }
 
     public interface OnItemSelected {
         void onItemSelected(String title, String info);
@@ -102,48 +94,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
     }
 
-    private static class MyFilter extends Filter {
 
-        private final RecyclerAdapter adapter;
-        private final DataList originalList;
-        private final DataList filteredList;
-
-        private MyFilter(RecyclerAdapter adapter) {
-            super();
-            this.adapter = adapter;
-            this.originalList = DataList.get();
-            this.filteredList = DataList.getEmptyList();
-        }
-
-        @Override
-        protected FilterResults performFiltering(CharSequence charSequence) {
-            filteredList.clear();
-            final FilterResults results = new FilterResults();
-
-            if (charSequence.length() == 0) {
-                filteredList.addAll(originalList);
-            } else {
-                final String filterPattern = charSequence.toString().toLowerCase().trim();
-
-
-                for (int i = 0; i < originalList.size(); i++) {
-
-                    if (originalList.getTitle(i).toLowerCase().contains(filterPattern) || originalList.getInfo(i).toLowerCase().contains(filterPattern)) {
-                        filteredList.add(originalList.getTitle(i), originalList.getInfo(i));
-                    }
-                }
-            }
-
-            results.values = filteredList;
-           // results.count = filteredList.size();
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            adapter.setList((DataList) filterResults.values);
-            adapter.notifyDataSetChanged();
-        }
-    }
 
 }

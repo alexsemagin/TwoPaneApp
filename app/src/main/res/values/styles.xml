@@ -9,6 +9,6 @@
 
         <item name="android:textColorHint">@android:color/white</item>
         <item name="android:editTextColor">@android:color/white</item>
-
+        <item name="homeAsUpIndicator">@drawable/ic_back</item>
     </style>
 </resources>
