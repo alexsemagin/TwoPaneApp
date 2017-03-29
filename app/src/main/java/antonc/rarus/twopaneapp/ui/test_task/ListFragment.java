@@ -3,10 +3,16 @@ package antonc.rarus.twopaneapp.ui.test_task;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class ListFragment extends Fragment implements ListView, RecyclerAdapter.OnItemSelected {
+public class ListFragment extends Fragment implements ListView, RecyclerAdapter.OnItemSelected, SearchView.OnQueryTextListener{
     private static final String ARG_TITLE = "title_text";
     private static final String ARG_INFO = "info_text";
 
@@ -28,13 +34,15 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
     private RecyclerAdapter mAdapter;
     private ListPresenter mPresenter;
 
+    private Toolbar mToolbar;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
 
         mAdapter = new RecyclerAdapter(getContext(), this);
-        mPresenter = new ListPresenter();
+        mPresenter = new ListPresenter(mAdapter);
     }
 
 
@@ -48,16 +56,26 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.app_name);
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener( v -> getActivity().finish());
+        mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        mToolbar.setTitle(R.string.app_name);
+        mToolbar.setNavigationIcon(R.drawable.ic_back);
+        mToolbar.setNavigationOnClickListener( v -> getActivity().finish());
+        mToolbar.inflateMenu(R.menu.menu_toolbar);
+        onCreateOptionsMenu();
         ButterKnife.bind(this, view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
 
         mPresenter.setView(this);
         mPresenter.getData();
+    }
+
+
+    public void onCreateOptionsMenu() {
+        Menu menu = mToolbar.getMenu();
+        MenuItem searchMenuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchMenuItem.getActionView();
+        searchView.setOnQueryTextListener(this);
     }
 
 
@@ -87,5 +105,18 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
         detailFragment.setArguments(args);
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction().replace(antonc.rarus.twopaneapp.R.id.fragment_detail_container, detailFragment, DetailFragment.class.getName()).commit();
+    }
+
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        mAdapter.getFilter().filter(query);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        mAdapter.getFilter().filter(newText);
+        return false;
     }
 }
