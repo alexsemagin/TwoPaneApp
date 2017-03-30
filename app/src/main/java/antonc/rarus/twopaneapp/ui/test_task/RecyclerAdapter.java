@@ -36,6 +36,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     public void setList(DataList strings) {
         mStringList = strings;
+        notifyDataSetChanged();
     }
 
 

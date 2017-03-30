@@ -41,10 +41,7 @@ public class DetailFragment extends Fragment implements DetailView {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v =inflater.inflate(R.layout.fragment_detail, container, false);
-        //return
-       // setHasOptionsMenu(true);
-        return v;
+        return inflater.inflate(R.layout.fragment_detail, container, false);
     }
 
 

@@ -49,8 +49,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/colorBlack"
-                android:textSize="@dimen/material_component_lists_two_line_text_size"
-                android:textStyle="bold"/>
+                android:textSize="@dimen/material_component_lists_two_line_text_size"/>
 
             <TextView
                 android:id="@+id/info_text"

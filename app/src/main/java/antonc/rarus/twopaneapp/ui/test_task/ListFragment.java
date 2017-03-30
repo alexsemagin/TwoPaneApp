@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import antonc.rarus.twopaneapp.R;
 import antonc.rarus.twopaneapp.model.entity.DataList;
@@ -31,6 +32,7 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
 
     private RecyclerAdapter mAdapter;
     private ListPresenter mPresenter;
+    private ProgressBar mProgressBar;
 
     private Toolbar mToolbar;
 
@@ -40,7 +42,7 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
         setRetainInstance(true);
 
         mAdapter = new RecyclerAdapter(getContext(), this);
-        mPresenter = new ListPresenter(mAdapter);
+        mPresenter = new ListPresenter();
     }
 
 
@@ -57,12 +59,14 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
         mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         mToolbar.setTitle(R.string.app_name);
         mToolbar.setNavigationIcon(R.drawable.ic_back);
-        mToolbar.setNavigationOnClickListener( v -> getActivity().finish());
+        mToolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         mToolbar.inflateMenu(R.menu.menu_toolbar);
         onCreateOptionsMenu();
         ButterKnife.bind(this, view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
+
+        mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
         mPresenter.setView(this);
         mPresenter.getData();
@@ -74,7 +78,6 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
         MenuItem searchMenuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchMenuItem.getActionView();
         searchView.setOnQueryTextListener(this);
-
         ImageView searchCloseIcon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
         searchCloseIcon.setImageResource(R.drawable.ic_close);
     }
@@ -83,6 +86,7 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
     @Override
     public void setData(DataList dl) {
         mAdapter.setList(dl);
+        setVisibilityProgessBar("INVISIBLE");
     }
 
     @Override
@@ -96,7 +100,6 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
         mPresenter.onItemSelected(title, info);
     }
 
-
     public void openDetailFragment(String title, String info) {
         Bundle args = new Bundle();
         args.putString(ARG_TITLE, title);
@@ -109,16 +112,24 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
     }
 
 
+    public void setVisibilityProgessBar(String visibility) {
+        if (visibility == "VISIBLE")
+            mProgressBar.setVisibility(ProgressBar.VISIBLE);
+        else if (visibility == "INVISIBLE")
+            mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+    }
 
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+       setVisibilityProgessBar("VISIBLE");
         mPresenter.search(query);
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
+        setVisibilityProgessBar("VISIBLE");
         mPresenter.search(newText);
         return false;
     }

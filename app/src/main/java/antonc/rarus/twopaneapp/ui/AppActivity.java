@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
-
 import antonc.rarus.twopaneapp.R;
 import antonc.rarus.twopaneapp.ui.test_task.DetailFragment;
 import antonc.rarus.twopaneapp.ui.test_task.ListFragment;
@@ -37,8 +36,10 @@ public class AppActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            Fragment detail = fragmentManager.findFragmentByTag(DetailFragment.class.getName());
+        Fragment detail;
+        if (fragmentManager.findFragmentByTag(DetailFragment.class.getName()) != null) {
+            detail = fragmentManager.findFragmentByTag(DetailFragment.class.getName());
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
             fragmentManager.beginTransaction().remove(detail).commit();
         } else {
             super.onBackPressed();
