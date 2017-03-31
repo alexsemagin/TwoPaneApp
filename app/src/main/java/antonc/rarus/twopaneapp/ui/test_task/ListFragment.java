@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -91,6 +90,13 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
         MenuItem searchMenuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchMenuItem.getActionView();
         searchView.setOnQueryTextListener(this);
+
+
+        MenuItem sortAZMenuItem = menu.findItem(R.id.action_sort_az);
+        searchMenuItem.setOnMenuItemClickListener(item -> {
+            mPresenter.sortingAZ();
+            return false;
+        });
 
         ImageView searchCloseIcon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
         searchCloseIcon.setImageResource(R.drawable.ic_close);

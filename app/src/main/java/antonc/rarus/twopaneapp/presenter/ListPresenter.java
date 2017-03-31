@@ -57,6 +57,10 @@ public class ListPresenter {
         setView(null);
     }
 
+    public void sortingAZ() {
+
+    }
+
     public void onItemSelected(String title, String info) {
         mView.openDetailFragment(title, info);
     }

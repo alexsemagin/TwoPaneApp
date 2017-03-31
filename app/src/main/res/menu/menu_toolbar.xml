@@ -17,10 +17,15 @@
 
         <menu>
 
-            <item android:id="@+id/action_settings"
-                  android:icon="@android:drawable/ic_menu_preferences"
+            <item android:id="@+id/action_sort_az"
+                  android:icon="@drawable/ic_sort_az"
                   app:showAsAction="ifRoom"
-                  android:title="@string/settings" />
+                  android:title="@string/sort_az" />
+
+            <item android:id="@+id/action_sort_time"
+                  android:icon="@drawable/ic_sort_time"
+                  app:showAsAction="ifRoom"
+                  android:title="@string/sort_time" />
 
             <item android:id="@+id/action_help"
                   android:icon="@android:drawable/ic_menu_help"
