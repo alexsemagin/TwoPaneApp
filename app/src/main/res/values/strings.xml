@@ -2,4 +2,7 @@
     <string name="app_name">TwoPaneApp</string>
     <string name="button_back_title">Back</string>
     <string name="time">12:48</string>
+    <string name="settings">settings</string>
+    <string name="help">help</string>
+    <string name="options">options</string>
 </resources>

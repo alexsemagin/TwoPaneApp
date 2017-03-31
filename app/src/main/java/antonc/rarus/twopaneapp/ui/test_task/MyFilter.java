@@ -1,5 +1,6 @@
 package antonc.rarus.twopaneapp.ui.test_task;
 
+import android.util.Log;
 import android.widget.Filter;
 
 import antonc.rarus.twopaneapp.model.entity.DataList;
@@ -25,6 +26,7 @@ public class MyFilter extends Filter {
         filteredList.clear();
         final FilterResults results = new FilterResults();
 
+        //Log.d("TEST", "perform " + Thread.currentThread().getName());
         if (charSequence.length() == 0) {
             filteredList.addAll(originalList);
         } else {
@@ -39,9 +41,17 @@ public class MyFilter extends Filter {
             }
         }
 
+        /*try {
+            Thread.sleep(15000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+
         results.values = filteredList;
         return results;
     }
+
+
 
     @Override
     protected void publishResults(CharSequence charSequence, FilterResults filterResults) {

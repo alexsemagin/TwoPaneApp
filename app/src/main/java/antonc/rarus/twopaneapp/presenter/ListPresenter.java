@@ -1,8 +1,13 @@
 package antonc.rarus.twopaneapp.presenter;
 
-import android.os.AsyncTask;
+import android.widget.ProgressBar;
+
 import antonc.rarus.twopaneapp.model.entity.DataList;
 import antonc.rarus.twopaneapp.ui.test_task.MyFilter;
+/*
+Сортирвока реверс и по времени
+меню справа от поиска
+ */
 
 public class ListPresenter {
 
@@ -10,9 +15,11 @@ public class ListPresenter {
     private String query;
     private DataList dl;
     private MyFilter filter;
+    private int mVisible;
 
     public ListPresenter() {
         filter = new MyFilter(this);
+        mVisible = ProgressBar.INVISIBLE;
     }
 
 
@@ -24,51 +31,35 @@ public class ListPresenter {
         if (mView != null) {
             if (dl == null) mView.setData(DataList.get());
             else mView.setData(dl);
+            setVisibilityProgressBar(mVisible);
         }
     }
 
     public void search(String query) {
         this.query = query;
-        Task task = new Task();
-        task.execute();
-    }
-
-    private void search() {
+        setVisibilityProgressBar(ProgressBar.VISIBLE);
         filter.filter(query);
-
-        try {
-            Thread.sleep(1500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
+
 
     public void updateDataList(DataList dl) {
         this.dl = dl;
+        getData();
+        setVisibilityProgressBar(ProgressBar.INVISIBLE);
     }
 
+    private void setVisibilityProgressBar(int visible) {
+        mView.setVisibilityProgessBar(visible);
+        mVisible = visible;
+    }
+
+    public void onDestroyView() {
+        setView(null);
+    }
 
     public void onItemSelected(String title, String info) {
-         mView.openDetailFragment(title, info);
+        mView.openDetailFragment(title, info);
     }
-
-
-
-
-
-   private class Task extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            search();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            getData();
-        }
-    }
-
 }
+
+
