@@ -20,6 +20,7 @@ public class ListPresenter {
     public ListPresenter() {
         filter = new MyFilter(this);
         mVisible = ProgressBar.INVISIBLE;
+        dl = DataList.get();
     }
 
 
@@ -39,8 +40,11 @@ public class ListPresenter {
         this.query = query;
         setVisibilityProgressBar(ProgressBar.VISIBLE);
         filter.filter(query);
-    }
+      }
 
+    public DataList getDataList() {
+        return dl;
+    }
 
     public void updateDataList(DataList dl) {
         this.dl = dl;
@@ -57,8 +61,14 @@ public class ListPresenter {
         setView(null);
     }
 
-    public void sortingAZ() {
+    public void sortingByTime() {
+        dl.sortByTime();
+        getData();
+    }
 
+    public void sortingByAZ() {
+        dl.sortByAZ();
+        getData();
     }
 
     public void onItemSelected(String title, String info) {

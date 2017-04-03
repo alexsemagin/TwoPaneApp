@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import antonc.rarus.twopaneapp.R;
@@ -49,6 +51,10 @@ public class DetailFragment extends Fragment implements DetailView {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+
+
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.scale);
+        mTextDetail.startAnimation(animation);
 
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_back);

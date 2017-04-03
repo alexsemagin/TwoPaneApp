@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import antonc.rarus.twopaneapp.R;
 import antonc.rarus.twopaneapp.model.entity.DataList;
@@ -58,8 +62,6 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-
         //Скрываем toolbar Listfragment в LANDSCAPE ориентации
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             AppBarLayout appBarLayout = (AppBarLayout) view.findViewById(R.id.app_bar_list);
@@ -93,8 +95,14 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
 
 
         MenuItem sortAZMenuItem = menu.findItem(R.id.action_sort_az);
-        searchMenuItem.setOnMenuItemClickListener(item -> {
-            mPresenter.sortingAZ();
+        sortAZMenuItem.setOnMenuItemClickListener(item -> {
+            mPresenter.sortingByAZ();
+            return false;
+        });
+
+        MenuItem sortTimeMenuItem = menu.findItem(R.id.action_sort_time);
+        sortTimeMenuItem.setOnMenuItemClickListener(item -> {
+            mPresenter.sortingByTime();
             return false;
         });
 
@@ -117,6 +125,7 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
     @Override
     public void onItemSelected(String title, String info) {
         mPresenter.onItemSelected(title, info);
+
     }
 
     public void openDetailFragment(String title, String info) {

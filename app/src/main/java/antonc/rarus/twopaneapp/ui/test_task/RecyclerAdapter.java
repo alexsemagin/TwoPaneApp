@@ -5,8 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,8 +44,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.textViewTitle.setText(mStringList.getTitle(position));
         String info = mStringList.getInfo(position);
+
         holder.textViewInfo.setVisibility(info.equals("") ? View.GONE : View.VISIBLE);
-        holder.textViewInfo.setText(mStringList.getInfo(position));
+        holder.textViewInfo.setText(info);
+
+        holder.textViewTime.setText(mStringList.getTime(position));
+
         holder.imageView.setImageResource(R.mipmap.ic_face);
     }
 
@@ -77,7 +79,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         TextView textViewTitle;
         @BindView(R.id.info_text)
         TextView textViewInfo;
-
+        @BindView(R.id.time)
+        TextView textViewTime;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -85,9 +88,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
 
         @OnClick(R.id.list_item)
-        public void onClick(View view) {
-            TextView textViewTitle = ButterKnife.findById(view, R.id.title_text);
-            TextView textViewInfo = ButterKnife.findById(view, R.id.info_text);
+        public void onClick() {
             String title = textViewTitle.getText().toString();
             String info = textViewInfo.getText().toString();
             itemSelected.onItemSelected(title, info);
