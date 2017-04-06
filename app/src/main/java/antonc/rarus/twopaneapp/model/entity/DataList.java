@@ -3,7 +3,6 @@ package antonc.rarus.twopaneapp.model.entity;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 
 
@@ -11,8 +10,6 @@ public class DataList {
     private static DataList sDataList;
     private ArrayList<DataItem> mDataItems;
 
-    private static String title = "TITLE";
-    private static String info = "INFO";
     private final SimpleDateFormat mFormat =
             new SimpleDateFormat("HH:mm:ss");
 
@@ -26,6 +23,8 @@ public class DataList {
     }
 
     private void initialization() {
+        String title = "TITLE";
+        String info = "INFO";
         for (int i = 0; i < 100; i++) {
             if (i % 2 == 0)
                 add(title + i, info + i);
@@ -46,12 +45,6 @@ public class DataList {
     }
 
 
-    private String getStringTime() {
-        Date now = new Date();
-        now.setTime(getRandomTime());
-        return mFormat.format(now);
-    }
-
     private String getStringTime(long lTime) {
         Date now = new Date();
         now.setTime(lTime);
@@ -59,8 +52,7 @@ public class DataList {
     }
 
     private long getRandomTime() {
-        long lTime = (long) (Math.random() * 75600000);
-        return lTime;
+        return (long) (Math.random() * 75600000);
     }
 
 
@@ -101,19 +93,17 @@ public class DataList {
 
     public void sortByTime() {
         if (!time)
-            Collections.sort(mDataItems, new SortByTimeComparator());
+            Collections.sort(mDataItems, (a, b) -> (int) (a.mTime - b.mTime));
         else
-            Collections.sort(mDataItems, new ReverseByTimeComparator());
+            Collections.sort(mDataItems, (a, b) -> (int) (b.mTime - a.mTime));
         time = !time;
-
-
     }
 
     public void sortByAZ() {
         if (!az)
-            Collections.sort(mDataItems, new SortByTitleComparator());
+            Collections.sort(mDataItems, (a, b) -> a.mTitle.compareToIgnoreCase(b.mTitle));
         else
-            Collections.sort(mDataItems, new ReverseByTitleComparator());
+            Collections.sort(mDataItems, (a, b) -> b.mTitle.compareToIgnoreCase(a.mTitle));
         az = !az;
     }
 
@@ -128,34 +118,10 @@ public class DataList {
         private String mInfo;
         private long mTime;
 
-        public DataItem(String title, String info, long time) {
+        DataItem(String title, String info, long time) {
             mTitle = title;
             mInfo = info;
             mTime = time;
-        }
-    }
-
-    private class SortByTimeComparator implements Comparator<DataItem> {
-        public int compare(DataItem a, DataItem b) {
-            return (int) (a.mTime - b.mTime);
-        }
-    }
-
-    private class ReverseByTimeComparator implements Comparator<DataItem> {
-        public int compare(DataItem a, DataItem b) {
-            return (int) (b.mTime - a.mTime);
-        }
-    }
-
-    private class SortByTitleComparator implements Comparator<DataItem> {
-        public int compare(DataItem a, DataItem b) {
-            return a.mTitle.compareToIgnoreCase(b.mTitle);
-        }
-    }
-
-    private class ReverseByTitleComparator implements Comparator<DataItem> {
-        public int compare(DataItem a, DataItem b) {
-            return b.mTitle.compareToIgnoreCase(a.mTitle);
         }
     }
 }

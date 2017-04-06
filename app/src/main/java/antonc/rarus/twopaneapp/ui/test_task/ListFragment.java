@@ -9,38 +9,39 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.holder.StringHolder;
 
 import antonc.rarus.twopaneapp.R;
 import antonc.rarus.twopaneapp.model.entity.DataList;
 import antonc.rarus.twopaneapp.presenter.ListPresenter;
 import antonc.rarus.twopaneapp.presenter.ListView;
+import antonc.rarus.twopaneapp.ui.AppActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class ListFragment extends Fragment implements ListView, RecyclerAdapter.OnItemSelected, SearchView.OnQueryTextListener{
+public class ListFragment extends Fragment implements ListView, RecyclerAdapter.OnItemSelected, SearchView.OnQueryTextListener {
     private static final String ARG_TITLE = "title_text";
     private static final String ARG_INFO = "info_text";
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private RecyclerAdapter mAdapter;
     private ListPresenter mPresenter;
     private ProgressBar mProgressBar;
 
-    private Toolbar mToolbar;
+    private Drawer mDrawer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,33 +63,40 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ButterKnife.bind(this, view);
+
         //Скрываем toolbar Listfragment в LANDSCAPE ориентации
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             AppBarLayout appBarLayout = (AppBarLayout) view.findViewById(R.id.app_bar_list);
             appBarLayout.setVisibility(AppBarLayout.GONE);
         }
 
+        toolbar = ButterKnife.findById(getActivity(),R.id.toolbar );
+        toolbar.setTitle(R.string.app_name);
+        toolbar.setNavigationIcon(R.drawable.ic_back);
+        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
+        toolbar.inflateMenu(R.menu.menu_toolbar);
 
-        mToolbar = ButterKnife.findById(getActivity(),R.id.toolbar );
-        mToolbar.setTitle(R.string.app_name);
-        mToolbar.setNavigationIcon(R.drawable.ic_back);
-        mToolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
-        mToolbar.inflateMenu(R.menu.menu_toolbar);
+
+        mDrawer = ((AppActivity) getActivity()).getDrawer();
+        mDrawer.setToolbar(getActivity(), toolbar);
+
         onCreateOptionsMenu();
 
-        ButterKnife.bind(this, view);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
 
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+
 
         mPresenter.setView(this);
         mPresenter.getData();
     }
 
 
-    public void onCreateOptionsMenu() {
-        Menu menu = mToolbar.getMenu();
+    private void onCreateOptionsMenu() {
+        Menu menu = toolbar.getMenu();
         MenuItem searchMenuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchMenuItem.getActionView();
         searchView.setOnQueryTextListener(this);
@@ -105,16 +113,17 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
             mPresenter.sortingByTime();
             return false;
         });
-
-        ImageView searchCloseIcon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
-        searchCloseIcon.setImageResource(R.drawable.ic_close);
     }
 
 
     @Override
     public void setData(DataList dl) {
-        mAdapter.setList(dl);
+        getActivity().runOnUiThread(() -> {
+            mAdapter.setList(dl);
+            mDrawer.updateBadge(1, new StringHolder(String.valueOf(dl.size())));
+        });
     }
+
 
     @Override
     public void onDestroyView() {
@@ -133,15 +142,21 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
         args.putString(ARG_TITLE, title);
         args.putString(ARG_INFO, info);
 
-        DetailFragment detailFragment = new DetailFragment();
+        /*DetailFragment detailFragment = new DetailFragment();
         detailFragment.setArguments(args);
         FragmentManager fm = getFragmentManager();
-        fm.beginTransaction().replace(antonc.rarus.twopaneapp.R.id.fragment_detail_container, detailFragment, DetailFragment.class.getName()).commit();
+        fm.beginTransaction().replace(antonc.rarus.twopaneapp.R.id.fragment_detail_container, detailFragment, DetailFragment.class.getName()).commit();*/
+
+        CollapsingToolbarFragment collapsingToolbarFragment = new CollapsingToolbarFragment();
+        collapsingToolbarFragment.setArguments(args);
+        FragmentManager fm = getFragmentManager();
+        fm.beginTransaction().replace(antonc.rarus.twopaneapp.R.id.fragment_detail_container, collapsingToolbarFragment, CollapsingToolbarFragment.class.getName()).commit();
     }
 
 
-    public void setVisibilityProgessBar(int visibility) {
-        mProgressBar.setVisibility(visibility);
+    public void setVisibilityProgressBar(int visibility) {
+        getActivity().runOnUiThread(() ->
+                mProgressBar.setVisibility(visibility));
     }
 
 
@@ -156,4 +171,5 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
         mPresenter.search(newText);
         return false;
     }
+
 }

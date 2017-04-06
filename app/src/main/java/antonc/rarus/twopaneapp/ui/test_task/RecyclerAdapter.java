@@ -49,7 +49,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.textViewInfo.setText(info);
 
         holder.textViewTime.setText(mStringList.getTime(position));
-
         holder.imageView.setImageResource(R.mipmap.ic_face);
     }
 
@@ -79,7 +78,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         TextView textViewTitle;
         @BindView(R.id.info_text)
         TextView textViewInfo;
-        @BindView(R.id.time)
+        @BindView(R.id.time_item)
         TextView textViewTime;
 
         public ViewHolder(View itemView) {

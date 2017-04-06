@@ -2,12 +2,11 @@ package antonc.rarus.twopaneapp.presenter;
 
 import android.widget.ProgressBar;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import antonc.rarus.twopaneapp.model.entity.DataList;
 import antonc.rarus.twopaneapp.ui.test_task.MyFilter;
-/*
-Сортирвока реверс и по времени
-меню справа от поиска
- */
 
 public class ListPresenter {
 
@@ -42,10 +41,6 @@ public class ListPresenter {
         filter.filter(query);
       }
 
-    public DataList getDataList() {
-        return dl;
-    }
-
     public void updateDataList(DataList dl) {
         this.dl = dl;
         getData();
@@ -53,7 +48,7 @@ public class ListPresenter {
     }
 
     private void setVisibilityProgressBar(int visible) {
-        mView.setVisibilityProgessBar(visible);
+        mView.setVisibilityProgressBar(visible);
         mVisible = visible;
     }
 
@@ -62,13 +57,20 @@ public class ListPresenter {
     }
 
     public void sortingByTime() {
-        dl.sortByTime();
-        getData();
+        ExecutorService ex = Executors.newSingleThreadExecutor();
+        ex.execute(() -> {
+            dl.sortByTime();
+            getData();
+        });
+
     }
 
     public void sortingByAZ() {
-        dl.sortByAZ();
-        getData();
+        ExecutorService ex = Executors.newSingleThreadExecutor();
+        ex.execute(() -> {
+            dl.sortByAZ();
+            getData();
+        });
     }
 
     public void onItemSelected(String title, String info) {

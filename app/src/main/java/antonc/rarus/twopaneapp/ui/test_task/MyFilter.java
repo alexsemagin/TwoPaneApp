@@ -33,11 +33,11 @@ public class MyFilter extends Filter {
                     filteredList.add(originalList.getTitle(i), originalList.getInfo(i), originalList.getTimeLong(i));
                 }
             }
-            try {
+            /*try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
         results.values = filteredList;
         return results;

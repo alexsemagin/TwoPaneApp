@@ -5,5 +5,5 @@ import antonc.rarus.twopaneapp.model.entity.DataList;
 public interface ListView {
     void setData(DataList dataList);
     void openDetailFragment(String title, String info);
-    void setVisibilityProgessBar(int visibility);
+    void setVisibilityProgressBar(int visibility);
 }

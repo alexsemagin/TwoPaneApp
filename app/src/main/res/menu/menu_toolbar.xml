@@ -11,7 +11,7 @@
 
     <item
         android:id="@+id/options"
-        android:title="@string/options"
+        android:title="@string/menu_options"
         app:showAsAction="always"
         android:icon="@drawable/ic_menu">
 
@@ -20,12 +20,12 @@
             <item android:id="@+id/action_sort_az"
                   android:icon="@drawable/ic_sort_az"
                   app:showAsAction="ifRoom"
-                  android:title="@string/sort_az" />
+                  android:title="@string/item_sort_az" />
 
             <item android:id="@+id/action_sort_time"
                   android:icon="@drawable/ic_sort_time"
                   app:showAsAction="ifRoom"
-                  android:title="@string/sort_time" />
+                  android:title="@string/item_sort_time" />
         </menu>
 
     </item>

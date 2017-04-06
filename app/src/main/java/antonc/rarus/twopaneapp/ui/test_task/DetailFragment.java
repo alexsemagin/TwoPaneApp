@@ -3,10 +3,7 @@ package antonc.rarus.twopaneapp.ui.test_task;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -24,10 +21,14 @@ public class DetailFragment extends Fragment implements DetailView {
     private static final String ARG_INFO = "info_text";
 
     private DetailPresenter mPresenter;
-    private Toolbar mToolbar;
+    //private Toolbar toolbar;
 
     @BindView(R.id.text_detail)
     TextView mTextDetail;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,9 +57,8 @@ public class DetailFragment extends Fragment implements DetailView {
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.scale);
         mTextDetail.startAnimation(animation);
 
-        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_back);
-        mToolbar.setNavigationOnClickListener(v -> getFragmentManager().beginTransaction().remove(DetailFragment.this).commit());
+        toolbar.setNavigationIcon(R.drawable.ic_back);
+        toolbar.setNavigationOnClickListener(v -> getFragmentManager().beginTransaction().remove(DetailFragment.this).commit());
 
         mPresenter.setView(this);
         mPresenter.getData();
@@ -66,7 +66,7 @@ public class DetailFragment extends Fragment implements DetailView {
 
     @Override
     public void setData(String title, String info) {
-        mToolbar.setTitle(title);
+        toolbar.setTitle(title);
         mTextDetail.setText(info);
     }
 
