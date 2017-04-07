@@ -16,11 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.holder.StringHolder;
 
+import java.util.List;
+
 import antonc.rarus.twopaneapp.R;
-import antonc.rarus.twopaneapp.model.entity.DataList;
+import antonc.rarus.twopaneapp.model.entity.MyModel;
 import antonc.rarus.twopaneapp.presenter.ListPresenter;
 import antonc.rarus.twopaneapp.presenter.ListView;
 import antonc.rarus.twopaneapp.ui.AppActivity;
@@ -34,8 +37,8 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+
+    private Toolbar toolbar;
 
     private RecyclerAdapter mAdapter;
     private ListPresenter mPresenter;
@@ -71,12 +74,9 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
             appBarLayout.setVisibility(AppBarLayout.GONE);
         }
 
-        toolbar = ButterKnife.findById(getActivity(),R.id.toolbar );
+        toolbar = ButterKnife.findById(getActivity(),R.id.toolbar_list );
         toolbar.setTitle(R.string.app_name);
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         toolbar.inflateMenu(R.menu.menu_toolbar);
-
 
         mDrawer = ((AppActivity) getActivity()).getDrawer();
         mDrawer.setToolbar(getActivity(), toolbar);
@@ -117,10 +117,10 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
 
 
     @Override
-    public void setData(DataList dl) {
+    public void setData(List dataItems) {
         getActivity().runOnUiThread(() -> {
-            mAdapter.setList(dl);
-            mDrawer.updateBadge(1, new StringHolder(String.valueOf(dl.size())));
+            mAdapter.setList(dataItems);
+            mDrawer.updateBadge(1, new StringHolder(String.valueOf(dataItems.size())));
         });
     }
 
@@ -141,11 +141,6 @@ public class ListFragment extends Fragment implements ListView, RecyclerAdapter.
         Bundle args = new Bundle();
         args.putString(ARG_TITLE, title);
         args.putString(ARG_INFO, info);
-
-        /*DetailFragment detailFragment = new DetailFragment();
-        detailFragment.setArguments(args);
-        FragmentManager fm = getFragmentManager();
-        fm.beginTransaction().replace(antonc.rarus.twopaneapp.R.id.fragment_detail_container, detailFragment, DetailFragment.class.getName()).commit();*/
 
         CollapsingToolbarFragment collapsingToolbarFragment = new CollapsingToolbarFragment();
         collapsingToolbarFragment.setArguments(args);

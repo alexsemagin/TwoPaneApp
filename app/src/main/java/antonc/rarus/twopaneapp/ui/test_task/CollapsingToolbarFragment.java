@@ -39,7 +39,6 @@ public class CollapsingToolbarFragment extends Fragment implements CollapsingToo
         setRetainInstance(true);
 
         String title = getArguments() == null ? ARG_TITLE : getArguments().getString(ARG_TITLE);
-
         mPresenter = new CollapsingToolbarPresenter(title);
     }
 
@@ -55,9 +54,6 @@ public class CollapsingToolbarFragment extends Fragment implements CollapsingToo
 
         Drawer drawer = ((AppActivity) getActivity()).getDrawer();
         drawer.setToolbar(getActivity(), toolbar, true);
-
-        drawer = ((AppActivity) getActivity()).getDrawer();
-        drawer.setToolbar(getActivity(), toolbar);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar);
 

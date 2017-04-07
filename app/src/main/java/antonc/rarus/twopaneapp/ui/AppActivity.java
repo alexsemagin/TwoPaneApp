@@ -22,8 +22,8 @@ import java.util.List;
 
 import antonc.rarus.twopaneapp.R;
 import antonc.rarus.twopaneapp.ui.test_task.CollapsingToolbarFragment;
-import antonc.rarus.twopaneapp.ui.test_task.DetailFragment;
 import antonc.rarus.twopaneapp.ui.test_task.ListFragment;
+import antonc.rarus.twopaneapp.ui.test_task.RxFragment;
 
 
 public class AppActivity extends AppCompatActivity {
@@ -38,6 +38,7 @@ public class AppActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout);
+
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -60,7 +61,8 @@ public class AppActivity extends AppCompatActivity {
                 .withAccountHeader(headerResult)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_free_play).withIcon(FontAwesome.Icon.faw_gamepad).withIdentifier(2),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_collapsing_toolbar).withIcon(FontAwesome.Icon.faw_gamepad).withIdentifier(2),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_rx).withIcon(FontAwesome.Icon.faw_rocket).withIdentifier(3),
                         new SectionDrawerItem().withName(R.string.drawer_item_settings),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog),
                         new DividerDrawerItem(),
@@ -68,9 +70,10 @@ public class AppActivity extends AppCompatActivity {
                 )
                 .withOnDrawerItemClickListener((view1, position, drawerItem) -> {
                     if (drawerItem != null) {
+                        Fragment fragment;
                         switch ((int) drawerItem.getIdentifier()) {
                             case 1: {
-                                Fragment fragment = fragmentManager.findFragmentByTag(ListFragment.class.getName());
+                                fragment = fragmentManager.findFragmentByTag(ListFragment.class.getName());
                                 List<Fragment> list = fragmentManager.getFragments();
                                 if (list != null) {
                                     for (Fragment f : list) {
@@ -82,10 +85,14 @@ public class AppActivity extends AppCompatActivity {
                                 break;
                             }
                             case 2: {
-                                /*if (fragmentManager.findFragmentByTag(CollapsingToolbarFragment.class.getName()) == null) {*/
-                                    CollapsingToolbarFragment collapsingToolbarFragment = new CollapsingToolbarFragment();
-                                    fragmentManager.beginTransaction().replace(antonc.rarus.twopaneapp.R.id.fragment_container, collapsingToolbarFragment, CollapsingToolbarFragment.class.getName()).commit();
-                                //}
+                                fragment = new CollapsingToolbarFragment();
+                                fragmentManager.beginTransaction().replace(antonc.rarus.twopaneapp.R.id.fragment_container, fragment, CollapsingToolbarFragment.class.getName()).commit();
+                                break;
+                            }
+
+                            case 3: {
+                                fragment = new RxFragment();
+                                fragmentManager.beginTransaction().replace(antonc.rarus.twopaneapp.R.id.fragment_container, fragment, RxFragment.class.getName()).commit();
                                 break;
                             }
                         }
@@ -98,14 +105,11 @@ public class AppActivity extends AppCompatActivity {
         mDrawer.setSelection(selection);
 
         Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_list_container);
-
-        //Если фрагмента нет в списке, то запрашиваем новую транзакцию, которая добавляет его в список
-        //FragmentManager сохраняет список фрагментов, поэтому следующие строки выпролняются только при запуске приложения
         if (fragment == null) {
             fragment = new ListFragment();
-            //Создать новую транзакцию фрагмента, включить в нее операцию add, а затем закрепить
             fragmentManager.beginTransaction().replace(R.id.fragment_list_container, fragment, ListFragment.class.getName()).commit();
         }
+
     }
 
     protected void onSaveInstanceState(Bundle outState) {
@@ -122,21 +126,13 @@ public class AppActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment;
-
-        if (mDrawer.isDrawerOpen()) {
+        if (mDrawer != null && mDrawer.isDrawerOpen()) {
             mDrawer.closeDrawer();
-        } else if (fragmentManager.findFragmentByTag(DetailFragment.class.getName()) != null) {
-            fragment = fragmentManager.findFragmentByTag(DetailFragment.class.getName());
-            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
-                fragmentManager.beginTransaction().remove(fragment).commit();
-            else {
-                super.onBackPressed();
-            }
-        } else if (fragmentManager.findFragmentByTag(CollapsingToolbarFragment.class.getName()) != null) {
-            fragment = fragmentManager.findFragmentByTag(CollapsingToolbarFragment.class.getName());
-            fragmentManager.beginTransaction().remove(fragment).commit();
-
+        } else if (fragmentManager.findFragmentByTag(RxFragment.class.getName()) != null) {
+            mDrawer.setSelection(1);
+        } else if (fragmentManager.findFragmentByTag(CollapsingToolbarFragment.class.getName()) != null
+                && getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            mDrawer.setSelection(1);
         } else super.onBackPressed();
     }
 

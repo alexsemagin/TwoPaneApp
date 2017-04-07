@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:id="@+id/fragment_container"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="antonc.rarus.twopaneapp.ui.AppActivity">
+
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="antonc.rarus.twopaneapp.ui.AppActivity">
+        android:fitsSystemWindows="true">
 
 
         <android.support.design.widget.AppBarLayout
@@ -24,7 +27,7 @@
             <android.support.v7.widget.Toolbar
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/toolbar"
+                android:id="@+id/toolbar_list"
                 android:layout_width="match_parent"
                 android:layout_height="?android:actionBarSize"
                 android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
@@ -33,7 +36,6 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:titleTextColor="@color/colorWhite"/>
-
         </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
@@ -59,4 +61,5 @@
         </FrameLayout>
     </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>
-</FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>

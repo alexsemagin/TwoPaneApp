@@ -1,9 +1,10 @@
 package antonc.rarus.twopaneapp.presenter;
 
-import antonc.rarus.twopaneapp.model.entity.DataList;
+import java.util.List;
+
 
 public interface ListView {
-    void setData(DataList dataList);
+    void setData(List myModel);
     void openDetailFragment(String title, String info);
     void setVisibilityProgressBar(int visibility);
 }

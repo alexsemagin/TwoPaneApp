@@ -2,24 +2,35 @@ package antonc.rarus.twopaneapp.presenter;
 
 import android.widget.ProgressBar;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.Collections;
+import java.util.List;
 
-import antonc.rarus.twopaneapp.model.entity.DataList;
+import antonc.rarus.twopaneapp.model.entity.DataItem;
+import antonc.rarus.twopaneapp.model.entity.MyModel;
 import antonc.rarus.twopaneapp.ui.test_task.MyFilter;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class ListPresenter {
 
     private ListView mView;
     private String query;
-    private DataList dl;
+    private List mDataItems;
     private MyFilter filter;
+
     private int mVisible;
+    private boolean az;
+    private boolean time;
 
     public ListPresenter() {
         filter = new MyFilter(this);
         mVisible = ProgressBar.INVISIBLE;
-        dl = DataList.get();
+
+        Observable.just(MyModel.get())
+                .subscribe(dataList -> {
+                    mDataItems = dataList;
+                });
     }
 
 
@@ -29,8 +40,7 @@ public class ListPresenter {
 
     public void getData() {
         if (mView != null) {
-            if (dl == null) mView.setData(DataList.get());
-            else mView.setData(dl);
+            mView.setData(mDataItems);
             setVisibilityProgressBar(mVisible);
         }
     }
@@ -41,8 +51,8 @@ public class ListPresenter {
         filter.filter(query);
       }
 
-    public void updateDataList(DataList dl) {
-        this.dl = dl;
+    public void updateDataList(List dataItems) {
+        this.mDataItems = dataItems;
         getData();
         setVisibilityProgressBar(ProgressBar.INVISIBLE);
     }
@@ -57,25 +67,46 @@ public class ListPresenter {
     }
 
     public void sortingByTime() {
-        ExecutorService ex = Executors.newSingleThreadExecutor();
-        ex.execute(() -> {
-            dl.sortByTime();
-            getData();
-        });
-
+       Observable.just(true)
+                .map(aBoolean -> {
+                    setVisibilityProgressBar(ProgressBar.VISIBLE);
+                    if (!time)
+                        Collections.sort(mDataItems, (a, b) -> {
+                            DataItem aItem = (DataItem) a;
+                            DataItem bItem = (DataItem) b;
+                            return (int) (aItem.getTimeLong() - bItem.getTimeLong());
+                        });
+                    else
+                        Collections.sort(mDataItems, (a, b) -> {
+                            DataItem aItem = (DataItem) a;
+                            DataItem bItem = (DataItem) b;
+                            return (int) (bItem.getTimeLong() - aItem.getTimeLong());
+                        });
+                    time = !time;
+                    return aBoolean;
+                }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(res -> {
+                            getData();
+                            setVisibilityProgressBar(ProgressBar.INVISIBLE);},
+                        e -> setVisibilityProgressBar(ProgressBar.INVISIBLE), () -> {});
     }
 
+
+
     public void sortingByAZ() {
-        ExecutorService ex = Executors.newSingleThreadExecutor();
+       /* ExecutorService ex = Executors.newSingleThreadExecutor();
         ex.execute(() -> {
-            dl.sortByAZ();
+            mDataItems.sortByAZ();
             getData();
-        });
+        });*/
     }
 
     public void onItemSelected(String title, String info) {
         mView.openDetailFragment(title, info);
     }
+
+
 }
 
 

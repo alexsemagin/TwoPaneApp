@@ -2,21 +2,25 @@ package antonc.rarus.twopaneapp.ui.test_task;
 
 import android.widget.Filter;
 
-import antonc.rarus.twopaneapp.model.entity.DataList;
+import java.util.ArrayList;
+import java.util.List;
+
+import antonc.rarus.twopaneapp.model.entity.DataItem;
+import antonc.rarus.twopaneapp.model.entity.MyModel;
 import antonc.rarus.twopaneapp.presenter.ListPresenter;
 
 
 public class MyFilter extends Filter {
 
 
-    private final DataList originalList;
-    private final DataList filteredList;
+    private List <DataItem> originalList;
+    private List <DataItem> filteredList;
     private ListPresenter presenter;
 
     public MyFilter(ListPresenter presenter) {
         super();
-        this.originalList = DataList.get();
-        this.filteredList = DataList.getEmptyList();
+        this.originalList =  MyModel.get();
+        this.filteredList = new ArrayList<>();
         this.presenter = presenter;
     }
 
@@ -29,15 +33,10 @@ public class MyFilter extends Filter {
         } else {
             final String filterPattern = charSequence.toString().toLowerCase().trim();
             for (int i = 0; i < originalList.size(); i++) {
-                if (originalList.getTitle(i).toLowerCase().contains(filterPattern) || originalList.getInfo(i).toLowerCase().contains(filterPattern)) {
-                    filteredList.add(originalList.getTitle(i), originalList.getInfo(i), originalList.getTimeLong(i));
+                if (originalList.get(i).getTitle().toLowerCase().contains(filterPattern) || originalList.get(i).getInfo().toLowerCase().contains(filterPattern)) {
+                    filteredList.add(new DataItem(originalList.get(i).getTitle(), originalList.get(i).getInfo(), originalList.get(i).getTimeLong()));
                 }
             }
-            /*try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
         }
         results.values = filteredList;
         return results;
@@ -47,6 +46,6 @@ public class MyFilter extends Filter {
 
     @Override
     protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-        presenter.updateDataList((DataList) filterResults.values);
+        presenter.updateDataList((List) filterResults.values);
     }
 }

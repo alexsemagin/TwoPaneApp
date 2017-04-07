@@ -8,15 +8,14 @@
 
 
     <string name="drawer_item_home">Домой</string>
-    <string name="drawer_item_free_play">CollapsingToolbar</string>
-    <string name="drawer_item_custom">Тестовое меню #3</string>
+    <string name="drawer_item_collapsing_toolbar">CollapsingToolbar</string>
+    <string name="drawer_item_rx">RxJava</string>
     <string name="drawer_item_settings">Настройки</string>
-    <string name="drawer_item_help">Помощь</string>
+    <string name="drawer_item_help">Опции</string>
     <string name="drawer_item_contact">Контакты</string>
-    <string name="drawer_item_description">Это описание</string>
 
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</string>
-    <string name="text_cardview_1">Info</string>
-    <string name="text_cardview_2">Info#2</string>
+    <string name="text_cardview_1">Title for cardview #1</string>
+    <string name="text_cardview_2">Title for cardview #2</string>
 
 </resources>

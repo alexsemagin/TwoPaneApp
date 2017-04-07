@@ -8,15 +8,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import antonc.rarus.twopaneapp.R;
-import antonc.rarus.twopaneapp.model.entity.DataList;
+import antonc.rarus.twopaneapp.model.entity.DataItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>  {
-    private DataList mStringList;
+    private List<DataItem> mDataItems;
     private ViewHolder mViewHolder;
     private Context mContext;
     private OnItemSelected itemSelected;
@@ -32,8 +34,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         itemSelected = onItemSelected;
     }
 
-    public void setList(DataList strings) {
-        mStringList = strings;
+    public void setList(List strings) {
+        mDataItems = strings;
         notifyDataSetChanged();
     }
 
@@ -42,13 +44,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     //При вызове получает ViewHolder и позицию в наборе данных
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.textViewTitle.setText(mStringList.getTitle(position));
-        String info = mStringList.getInfo(position);
+        holder.textViewTitle.setText(mDataItems.get(position).getTitle());
+        String info = mDataItems.get(position).getInfo();
 
         holder.textViewInfo.setVisibility(info.equals("") ? View.GONE : View.VISIBLE);
         holder.textViewInfo.setText(info);
 
-        holder.textViewTime.setText(mStringList.getTime(position));
+        holder.textViewTime.setText(mDataItems.get(position).getTime());
+
         holder.imageView.setImageResource(R.mipmap.ic_face);
     }
 
@@ -67,7 +70,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     //Метод для получения количества элементов
     @Override
     public int getItemCount() {
-        return mStringList.size();
+        return mDataItems.size();
     }
 
 
