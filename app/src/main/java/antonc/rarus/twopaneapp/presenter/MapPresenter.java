@@ -1,14 +1,14 @@
 package antonc.rarus.twopaneapp.presenter;
 
-public class RxPresenter {
-    private RxView mView;
+public class MapPresenter {
+    private MapView mView;
 
 
-    public RxPresenter() {
+    public MapPresenter() {
 
     }
 
-    public void setView(RxView view) {
+    public void setView(MapView view) {
         mView = view;
     }
 

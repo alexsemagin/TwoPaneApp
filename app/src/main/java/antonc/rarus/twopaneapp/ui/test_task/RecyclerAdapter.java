@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import antonc.rarus.twopaneapp.R;
@@ -32,6 +33,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public RecyclerAdapter(Context context, OnItemSelected onItemSelected) {
         mContext = context;
         itemSelected = onItemSelected;
+        mDataItems = new ArrayList<>();
+
     }
 
     public void setList(List strings) {

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/options_map"
+        android:icon="@drawable/ic_menu"
+        android:title="@string/menu_options"
+        app:showAsAction="always">
+
+        <menu>
+
+            <item
+                android:id="@+id/action_type_norm"
+                android:title="@string/item_type_norm"
+                app:showAsAction="ifRoom"/>
+
+            <item
+                android:id="@+id/action_type_hybrid"
+                android:title="@string/item_type_hybrid"
+                app:showAsAction="ifRoom"/>
+
+            <item
+                android:id="@+id/action_type_satellite"
+                android:title="@string/item_type_satellite"
+                app:showAsAction="ifRoom"/>
+            <item
+                android:id="@+id/action_type_terrain"
+                android:title="@string/item_type_terrain"
+                app:showAsAction="ifRoom"/>
+        </menu>
+
+    </item>
+</menu>

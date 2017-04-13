@@ -21,7 +21,7 @@ public class DataItem {
         mTime = time;
     }
 
-    DataItem(String title, String info) {
+    public DataItem(String title, String info) {
         mTitle = title;
         mInfo = info;
         mTime = getRandomTime();

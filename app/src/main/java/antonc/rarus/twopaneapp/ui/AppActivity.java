@@ -1,11 +1,16 @@
 package antonc.rarus.twopaneapp.ui;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -23,7 +28,7 @@ import java.util.List;
 import antonc.rarus.twopaneapp.R;
 import antonc.rarus.twopaneapp.ui.test_task.CollapsingToolbarFragment;
 import antonc.rarus.twopaneapp.ui.test_task.ListFragment;
-import antonc.rarus.twopaneapp.ui.test_task.RxFragment;
+import antonc.rarus.twopaneapp.ui.test_task.MapFragment;
 
 
 public class AppActivity extends AppCompatActivity {
@@ -62,7 +67,7 @@ public class AppActivity extends AppCompatActivity {
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_collapsing_toolbar).withIcon(FontAwesome.Icon.faw_gamepad).withIdentifier(2),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_rx).withIcon(FontAwesome.Icon.faw_rocket).withIdentifier(3),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_map).withIcon(FontAwesome.Icon.faw_map).withIdentifier(3),
                         new SectionDrawerItem().withName(R.string.drawer_item_settings),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog),
                         new DividerDrawerItem(),
@@ -91,8 +96,8 @@ public class AppActivity extends AppCompatActivity {
                             }
 
                             case 3: {
-                                fragment = new RxFragment();
-                                fragmentManager.beginTransaction().replace(antonc.rarus.twopaneapp.R.id.fragment_container, fragment, RxFragment.class.getName()).commit();
+                                fragment = new MapFragment();
+                                fragmentManager.beginTransaction().replace(antonc.rarus.twopaneapp.R.id.fragment_container, fragment, MapFragment.class.getName()).commit();
                                 break;
                             }
                         }
@@ -103,6 +108,7 @@ public class AppActivity extends AppCompatActivity {
                 .build();
 
         mDrawer.setSelection(selection);
+
 
         Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_list_container);
         if (fragment == null) {
@@ -128,7 +134,7 @@ public class AppActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (mDrawer != null && mDrawer.isDrawerOpen()) {
             mDrawer.closeDrawer();
-        } else if (fragmentManager.findFragmentByTag(RxFragment.class.getName()) != null) {
+        } else if (fragmentManager.findFragmentByTag(MapFragment.class.getName()) != null) {
             mDrawer.setSelection(1);
         } else if (fragmentManager.findFragmentByTag(CollapsingToolbarFragment.class.getName()) != null
                 && getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {

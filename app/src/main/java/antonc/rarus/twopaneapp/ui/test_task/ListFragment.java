@@ -23,7 +23,6 @@ import com.mikepenz.materialdrawer.holder.StringHolder;
 import java.util.List;
 
 import antonc.rarus.twopaneapp.R;
-import antonc.rarus.twopaneapp.model.entity.MyModel;
 import antonc.rarus.twopaneapp.presenter.ListPresenter;
 import antonc.rarus.twopaneapp.presenter.ListView;
 import antonc.rarus.twopaneapp.ui.AppActivity;
